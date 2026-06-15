@@ -21,6 +21,10 @@ final class EditorState: @unchecked Sendable {
     var showGoToLine = false
     var goToLineInput: String = ""
 
+    // MARK: - Buscar y reemplazar
+    var showReplace = false
+    var replaceTerm: String = ""
+
     init(directory: String) {
         self.currentDirectory = directory
         reload()
@@ -83,6 +87,38 @@ final class EditorState: @unchecked Sendable {
             viewportHeight: buffer.lastViewportHeight,
             viewportWidth: buffer.lastViewportWidth
         )
+    }
+
+    // MARK: - Reemplazo
+
+    func replaceCurrentMatch() {
+        guard !searchMatches.isEmpty, let buffer = activeBuffer else { return }
+        let match = searchMatches[currentMatchIndex]
+        buffer.replaceInLine(
+            line: match.line,
+            startColumn: match.startColumn,
+            endColumn: match.endColumn,
+            with: replaceTerm
+        )
+        runSearch()
+    }
+
+    func replaceAllMatches() -> Int {
+        guard !searchMatches.isEmpty, let buffer = activeBuffer else { return 0 }
+        let sorted = searchMatches.sorted {
+            $0.line != $1.line ? $0.line > $1.line : $0.startColumn > $1.startColumn
+        }
+        for match in sorted {
+            buffer.replaceInLine(
+                line: match.line,
+                startColumn: match.startColumn,
+                endColumn: match.endColumn,
+                with: replaceTerm
+            )
+        }
+        let count = sorted.count
+        runSearch()
+        return count
     }
 
     // MARK: - Ir a línea

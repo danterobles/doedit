@@ -62,6 +62,11 @@ struct RootView: View {
                         state.showSearch = true
                     }
                     return true
+                case .character("r"):
+                    if state.activeBuffer != nil {
+                        state.showReplace = true
+                    }
+                    return true
                 case .character("g"):
                     if state.activeBuffer != nil {
                         state.goToLineInput = ""
@@ -99,6 +104,7 @@ struct RootView: View {
                 }
                 StatusBarItem(shortcut: Shortcut.ctrl("s"), label: "guardar")
                 StatusBarItem(shortcut: Shortcut.ctrl("w"), label: "buscar")
+                StatusBarItem(shortcut: Shortcut.ctrl("r"), label: "reemplazar")
                 StatusBarItem(shortcut: Shortcut.ctrl("g"), label: "ir a línea")
                 StatusBarItem(shortcut: "⌥c", label: "copiar")
                 StatusBarItem(shortcut: Shortcut.ctrl("k"), label: "cortar")
@@ -122,6 +128,15 @@ struct RootView: View {
         )) {
             GoToLinePrompt(
                 isPresented: Binding(get: { state.showGoToLine }, set: { state.showGoToLine = $0 }),
+                state: state
+            )
+        }
+        .modal(isPresented: Binding(
+            get: { state.showReplace },
+            set: { state.showReplace = $0 }
+        )) {
+            ReplacePrompt(
+                isPresented: Binding(get: { state.showReplace }, set: { state.showReplace = $0 }),
                 state: state
             )
         }

@@ -265,6 +265,17 @@ final class TextBuffer: @unchecked Sendable {
         }
     }
 
+    // MARK: - Reemplazo
+
+    func replaceInLine(line: Int, startColumn: Int, endColumn: Int, with replacement: String) {
+        guard line < lines.count else { return }
+        let chars = Array(lines[line])
+        let s = min(startColumn, chars.count)
+        let e = min(endColumn, chars.count)
+        lines[line] = String(chars[0..<s]) + replacement + String(chars[e...])
+        isDirty = true
+    }
+
     // MARK: - Serialización
 
     func serialize() -> String {
