@@ -102,6 +102,10 @@ struct RootView: View {
                 if buffer.selection != nil {
                     StatusBarItem(shortcut: "SEL", label: "selección")
                 }
+                if !state.searchMatches.isEmpty {
+                    StatusBarItem(shortcut: "⌥w", label: "siguiente")
+                }
+                StatusBarItem(shortcut: Shortcut.ctrl("z"), label: "deshacer")
                 StatusBarItem(shortcut: Shortcut.ctrl("s"), label: "guardar")
                 StatusBarItem(shortcut: Shortcut.ctrl("w"), label: "buscar")
                 StatusBarItem(shortcut: Shortcut.ctrl("r"), label: "reemplazar")

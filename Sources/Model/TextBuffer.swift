@@ -20,12 +20,56 @@ final class TextBuffer: @unchecked Sendable {
     var filePath: String?
     var lineEnding: LineEnding
 
-    // Dimensiones del viewport — actualizadas por EditorView en cada render
     var lastViewportHeight: Int = 24
     var lastViewportWidth: Int = 80
 
-    // Selección activa (nil = sin selección)
     var selection: Selection? = nil
+
+    // MARK: - Undo/Redo
+
+    private struct Snapshot: Sendable {
+        let lines: [String]
+        let cursor: CursorPosition
+        let selection: Selection?
+        let isDirty: Bool
+    }
+
+    @ObservationIgnored private var undoStack: [Snapshot] = []
+    @ObservationIgnored private var redoStack: [Snapshot] = []
+    @ObservationIgnored private var lastOpWasInsert = false
+    @ObservationIgnored private var suppressSnapshots = false
+
+    var canUndo: Bool { !undoStack.isEmpty }
+    var canRedo: Bool { !redoStack.isEmpty }
+
+    private func saveSnapshot() {
+        guard !suppressSnapshots else { return }
+        if undoStack.count >= 50 { undoStack.removeFirst() }
+        undoStack.append(Snapshot(lines: lines, cursor: cursor, selection: selection, isDirty: isDirty))
+        redoStack.removeAll()
+    }
+
+    func undo() {
+        guard let snapshot = undoStack.popLast() else { return }
+        redoStack.append(Snapshot(lines: lines, cursor: cursor, selection: selection, isDirty: isDirty))
+        lines = snapshot.lines
+        cursor = snapshot.cursor
+        selection = snapshot.selection
+        isDirty = snapshot.isDirty
+        lastOpWasInsert = false
+    }
+
+    func redo() {
+        guard let snapshot = redoStack.popLast() else { return }
+        undoStack.append(Snapshot(lines: lines, cursor: cursor, selection: selection, isDirty: isDirty))
+        lines = snapshot.lines
+        cursor = snapshot.cursor
+        selection = snapshot.selection
+        isDirty = snapshot.isDirty
+        lastOpWasInsert = false
+    }
+
+    // MARK: - Init
 
     init(lines: [String] = [""], filePath: String? = nil, lineEnding: LineEnding = .lf) {
         self.lines = lines.isEmpty ? [""] : lines
@@ -41,6 +85,8 @@ final class TextBuffer: @unchecked Sendable {
 
     func insert(_ char: Character) {
         guard char != "\r" else { return }
+        if !lastOpWasInsert { saveSnapshot() }
+        lastOpWasInsert = true
         var line = lines[cursor.line]
         let idx = index(in: line, at: cursor.column)
         line.insert(char, at: idx)
@@ -50,6 +96,7 @@ final class TextBuffer: @unchecked Sendable {
     }
 
     func insertNewline() {
+        saveSnapshot(); lastOpWasInsert = false
         let line = lines[cursor.line]
         let idx = index(in: line, at: cursor.column)
         let before = String(line[..<idx])
@@ -62,6 +109,7 @@ final class TextBuffer: @unchecked Sendable {
     }
 
     func deleteBackward() {
+        saveSnapshot(); lastOpWasInsert = false
         if cursor.column > 0 {
             var line = lines[cursor.line]
             let cur = index(in: line, at: cursor.column)
@@ -79,6 +127,7 @@ final class TextBuffer: @unchecked Sendable {
     }
 
     func deleteForward() {
+        saveSnapshot(); lastOpWasInsert = false
         let line = lines[cursor.line]
         if cursor.column < line.count {
             var l = line
@@ -91,7 +140,11 @@ final class TextBuffer: @unchecked Sendable {
         isDirty = true
     }
 
+    // Pegar texto: una sola entrada en el historial para todo el bloque.
     func insert(text: String) {
+        saveSnapshot(); lastOpWasInsert = false
+        suppressSnapshots = true
+        defer { suppressSnapshots = false; lastOpWasInsert = false }
         for ch in text {
             if ch == "\n" { insertNewline() } else { insert(ch) }
         }
@@ -140,6 +193,7 @@ final class TextBuffer: @unchecked Sendable {
 
     func deleteSelection() {
         guard let sel = selection, !sel.isEmpty else { return }
+        saveSnapshot(); lastOpWasInsert = false
         let (start, end) = sel.normalized()
 
         if start.line == end.line {
@@ -162,8 +216,8 @@ final class TextBuffer: @unchecked Sendable {
         isDirty = true
     }
 
-    // Corta la línea actual y devuelve su contenido (incluyendo \n implícito).
     func cutLine() -> String {
+        saveSnapshot(); lastOpWasInsert = false
         let content = lines[cursor.line]
         if lines.count == 1 {
             lines[0] = ""
@@ -178,8 +232,6 @@ final class TextBuffer: @unchecked Sendable {
         return content + "\n"
     }
 
-    // Devuelve la columna seleccionada en la línea dada (en coordenadas de documento).
-    // Nil si la línea no está dentro de la selección.
     func selectionColumns(forLine lineIdx: Int) -> Range<Int>? {
         guard let sel = selection, !sel.isEmpty else { return nil }
         let (start, end) = sel.normalized()
@@ -194,6 +246,18 @@ final class TextBuffer: @unchecked Sendable {
         } else {
             return 0..<lineLen
         }
+    }
+
+    // MARK: - Reemplazo
+
+    func replaceInLine(line: Int, startColumn: Int, endColumn: Int, with replacement: String) {
+        guard line < lines.count else { return }
+        saveSnapshot(); lastOpWasInsert = false
+        let chars = Array(lines[line])
+        let s = min(startColumn, chars.count)
+        let e = min(endColumn, chars.count)
+        lines[line] = String(chars[0..<s]) + replacement + String(chars[e...])
+        isDirty = true
     }
 
     // MARK: - Movimiento
@@ -263,17 +327,6 @@ final class TextBuffer: @unchecked Sendable {
         } else if cursor.column >= horizontalOffset + viewportWidth {
             horizontalOffset = cursor.column - viewportWidth + 1
         }
-    }
-
-    // MARK: - Reemplazo
-
-    func replaceInLine(line: Int, startColumn: Int, endColumn: Int, with replacement: String) {
-        guard line < lines.count else { return }
-        let chars = Array(lines[line])
-        let s = min(startColumn, chars.count)
-        let e = min(endColumn, chars.count)
-        lines[line] = String(chars[0..<s]) + replacement + String(chars[e...])
-        isDirty = true
     }
 
     // MARK: - Serialización

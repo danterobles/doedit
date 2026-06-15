@@ -25,9 +25,25 @@ final class EditorHandler: Focusable, @unchecked Sendable {
             return true
         }
 
-        // Ctrl+letra — solo K (cortar) y U (pegar); resto pasa (Ctrl+S/Q/B → onKeyPress)
+        // Ctrl+letra — K (cortar), U (pegar), Z (deshacer), Y (rehacer)
         if event.ctrl {
             switch event.key {
+            case .character("z"):
+                buffer.undo()
+                buffer.ensureCursorVisible(
+                    viewportHeight: buffer.lastViewportHeight,
+                    viewportWidth: buffer.lastViewportWidth
+                )
+                return true
+
+            case .character("y"):
+                buffer.redo()
+                buffer.ensureCursorVisible(
+                    viewportHeight: buffer.lastViewportHeight,
+                    viewportWidth: buffer.lastViewportWidth
+                )
+                return true
+
             case .character("k"):
                 if buffer.selection != nil {
                     clipboard.content = buffer.selectedText() ?? ""
