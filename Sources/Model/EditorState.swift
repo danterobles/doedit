@@ -28,4 +28,11 @@ final class EditorState: @unchecked Sendable {
             activeBuffer = nil
         }
     }
+
+    func saveCurrentBuffer() throws {
+        guard let buffer = activeBuffer, let path = buffer.filePath else { return }
+        let content = buffer.serialize()
+        try content.write(toFile: path, atomically: true, encoding: .utf8)
+        buffer.markClean()
+    }
 }
