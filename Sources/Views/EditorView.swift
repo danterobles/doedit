@@ -1,18 +1,17 @@
 import TUIkit
 
-// Vista pública — usa body para delegar en el core privado
 struct EditorView: View {
     let buffer: TextBuffer
+    let clipboard: Clipboard
 
     var body: some View {
-        _EditorViewCore(buffer: buffer)
+        _EditorViewCore(buffer: buffer, clipboard: clipboard)
     }
 }
 
-// Core privado con renderizado directo al buffer ANSI.
-// Implementa Renderable para acceder a context.availableWidth/Height.
 private struct _EditorViewCore: View, Renderable {
     let buffer: TextBuffer
+    let clipboard: Clipboard
 
     var body: Never { fatalError("_EditorViewCore renders via Renderable") }
 
@@ -39,21 +38,25 @@ private struct _EditorViewCore: View, Renderable {
             let lineIdx = startLine + row
 
             guard lineIdx < buffer.lines.count else {
-                // Más allá del final del archivo
                 let emptyNum = String(repeating: " ", count: numWidth)
                 outputLines.append("\u{1B}[2m\(emptyNum)\u{1B}[0m" + String(repeating: " ", count: contentWidth))
                 continue
             }
 
-            // Número de línea (dim, alineado a la derecha)
             let numStr = String(format: "%\(numWidth - 1)d ", lineIdx + 1)
             let lineNum = "\u{1B}[2m\(numStr)\u{1B}[0m"
 
-            // Contenido con cursor
             let isCursorRow = lineIdx == buffer.cursor.line
-            let screenCol = isCursorRow ? buffer.cursor.column - buffer.horizontalOffset : nil
-            let content = renderLine(buffer.lines[lineIdx], colOffset: buffer.horizontalOffset,
-                                     width: contentWidth, cursorScreenCol: screenCol)
+            let screenCursorCol = isCursorRow ? buffer.cursor.column - buffer.horizontalOffset : nil
+            let selCols = buffer.selectionColumns(forLine: lineIdx)
+
+            let content = renderLine(
+                buffer.lines[lineIdx],
+                colOffset: buffer.horizontalOffset,
+                width: contentWidth,
+                cursorScreenCol: screenCursorCol,
+                selectionCols: selCols
+            )
 
             outputLines.append(lineNum + content)
         }
@@ -61,23 +64,27 @@ private struct _EditorViewCore: View, Renderable {
         return FrameBuffer(lines: outputLines)
     }
 
-    // Renderiza una línea del buffer con cursor invertido en la posición indicada.
-    private func renderLine(_ rawLine: String, colOffset: Int, width: Int, cursorScreenCol: Int?) -> String {
+    private func renderLine(
+        _ rawLine: String,
+        colOffset: Int,
+        width: Int,
+        cursorScreenCol: Int?,
+        selectionCols: Range<Int>?
+    ) -> String {
         let chars = Array(rawLine)
         var result = ""
 
         for i in 0..<width {
             let charIdx = colOffset + i
-            let ch: Character
-            if charIdx < chars.count {
-                let c = chars[charIdx]
-                ch = c == "\t" ? " " : c  // tab → espacio para alineación consistente
-            } else {
-                ch = " "
-            }
+            let ch: Character = charIdx < chars.count
+                ? (chars[charIdx] == "\t" ? " " : chars[charIdx])
+                : " "
 
-            if let col = cursorScreenCol, i == col {
-                result += "\u{1B}[7m\(ch)\u{1B}[0m"  // invertido = cursor
+            let isCursor = cursorScreenCol.map { $0 == i } ?? false
+            let isSelected = selectionCols.map { $0.contains(charIdx) } ?? false
+
+            if isCursor || isSelected {
+                result += "\u{1B}[7m\(ch)\u{1B}[0m"
             } else {
                 result += String(ch)
             }
@@ -86,16 +93,20 @@ private struct _EditorViewCore: View, Renderable {
         return result
     }
 
-    // Recupera o crea el EditorHandler y lo registra con el FocusManager.
     private func registerHandler(context: RenderContext) {
         guard let storage = context.environment.stateStorage else { return }
         let key = StateStorage.StateKey(identity: context.identity, propertyIndex: 0)
         let box = storage.storage(
             for: key,
-            default: EditorHandler(focusID: "editor-\(context.identity.path)", buffer: buffer)
+            default: EditorHandler(
+                focusID: "editor-\(context.identity.path)",
+                buffer: buffer,
+                clipboard: clipboard
+            )
         )
         let handler = box.value
-        handler.buffer = buffer  // sincronizar si el archivo cambió
+        handler.buffer = buffer
+        handler.clipboard = clipboard
         context.environment.focusManager.register(handler)
     }
 }

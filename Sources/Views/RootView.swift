@@ -20,7 +20,7 @@ struct RootView: View {
             },
             detail: {
                 if let buffer = state.activeBuffer {
-                    EditorView(buffer: buffer)
+                    EditorView(buffer: buffer, clipboard: state.clipboard)
                 } else {
                     VStack {
                         Text("doedit")
@@ -69,7 +69,13 @@ struct RootView: View {
                 if buffer.isDirty {
                     StatusBarItem(shortcut: "*", label: "modificado")
                 }
+                if buffer.selection != nil {
+                    StatusBarItem(shortcut: "SEL", label: "selección")
+                }
                 StatusBarItem(shortcut: Shortcut.ctrl("s"), label: "guardar")
+                StatusBarItem(shortcut: "⌥c", label: "copiar")
+                StatusBarItem(shortcut: Shortcut.ctrl("k"), label: "cortar")
+                StatusBarItem(shortcut: Shortcut.ctrl("u"), label: "pegar")
             }
             StatusBarItem(shortcut: Shortcut.ctrl("b"), label: "sidebar")
             StatusBarItem(shortcut: Shortcut.ctrl("q"), label: "salir")

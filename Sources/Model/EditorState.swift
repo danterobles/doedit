@@ -8,6 +8,7 @@ final class EditorState: @unchecked Sendable {
     var selectedFileID: String? = nil
     var activeBuffer: TextBuffer? = nil
     var errorMessage: String? = nil
+    let clipboard = Clipboard()
 
     init(directory: String) {
         self.currentDirectory = directory

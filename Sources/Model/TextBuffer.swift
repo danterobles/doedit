@@ -24,6 +24,9 @@ final class TextBuffer: @unchecked Sendable {
     var lastViewportHeight: Int = 24
     var lastViewportWidth: Int = 80
 
+    // Selección activa (nil = sin selección)
+    var selection: Selection? = nil
+
     init(lines: [String] = [""], filePath: String? = nil, lineEnding: LineEnding = .lf) {
         self.lines = lines.isEmpty ? [""] : lines
         self.cursor = CursorPosition(line: 0, column: 0)
@@ -91,6 +94,105 @@ final class TextBuffer: @unchecked Sendable {
     func insert(text: String) {
         for ch in text {
             if ch == "\n" { insertNewline() } else { insert(ch) }
+        }
+    }
+
+    // MARK: - Selección
+
+    func startSelectionIfNeeded() {
+        if selection == nil {
+            selection = Selection(anchor: cursor, head: cursor)
+        }
+    }
+
+    func updateSelectionHead() {
+        selection?.head = cursor
+        if selection?.isEmpty == true { selection = nil }
+    }
+
+    func clearSelection() { selection = nil }
+
+    func selectedText() -> String? {
+        guard let sel = selection, !sel.isEmpty else { return nil }
+        let (start, end) = sel.normalized()
+
+        if start.line == end.line {
+            let chars = Array(lines[start.line])
+            let s = min(start.column, chars.count)
+            let e = min(end.column, chars.count)
+            guard s < e else { return nil }
+            return String(chars[s..<e])
+        }
+
+        var result = ""
+        for li in start.line...end.line {
+            let chars = Array(lines[li])
+            if li == start.line {
+                result += String(chars[min(start.column, chars.count)...]) + "\n"
+            } else if li == end.line {
+                result += String(chars[..<min(end.column, chars.count)])
+            } else {
+                result += lines[li] + "\n"
+            }
+        }
+        return result.isEmpty ? nil : result
+    }
+
+    func deleteSelection() {
+        guard let sel = selection, !sel.isEmpty else { return }
+        let (start, end) = sel.normalized()
+
+        if start.line == end.line {
+            var chars = Array(lines[start.line])
+            let s = min(start.column, chars.count)
+            let e = min(end.column, chars.count)
+            if s < e { chars.removeSubrange(s..<e) }
+            lines[start.line] = String(chars)
+        } else {
+            let startChars = Array(lines[start.line])
+            let endChars = Array(lines[end.line])
+            let prefix = String(startChars[..<min(start.column, startChars.count)])
+            let suffix = String(endChars[min(end.column, endChars.count)...])
+            lines[start.line] = prefix + suffix
+            lines.removeSubrange((start.line + 1)...end.line)
+        }
+
+        cursor = start
+        selection = nil
+        isDirty = true
+    }
+
+    // Corta la línea actual y devuelve su contenido (incluyendo \n implícito).
+    func cutLine() -> String {
+        let content = lines[cursor.line]
+        if lines.count == 1 {
+            lines[0] = ""
+        } else {
+            lines.remove(at: cursor.line)
+            if cursor.line >= lines.count {
+                cursor.line = max(0, lines.count - 1)
+            }
+        }
+        cursor.column = 0
+        isDirty = true
+        return content + "\n"
+    }
+
+    // Devuelve la columna seleccionada en la línea dada (en coordenadas de documento).
+    // Nil si la línea no está dentro de la selección.
+    func selectionColumns(forLine lineIdx: Int) -> Range<Int>? {
+        guard let sel = selection, !sel.isEmpty else { return nil }
+        let (start, end) = sel.normalized()
+        guard lineIdx >= start.line && lineIdx <= end.line else { return nil }
+        let lineLen = lines[lineIdx].count
+        if start.line == end.line {
+            return min(start.column, lineLen)..<min(end.column, lineLen)
+        } else if lineIdx == start.line {
+            return min(start.column, lineLen)..<lineLen
+        } else if lineIdx == end.line {
+            return 0..<min(end.column, lineLen)
+        } else {
+            return 0..<lineLen
         }
     }
 
