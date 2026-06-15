@@ -1,15 +1,2 @@
-import TUIkit
-
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Text("Hello, TUIkit!")
-                .foregroundStyle(.palette.accent)
-                .bold()
-
-            Text("Welcome to your new terminal app")
-                .foregroundStyle(.palette.foregroundSecondary)
-        }
-        .padding()
-    }
-}
+// Este archivo se mantiene vacío intencionalmente.
+// El punto de entrada de vistas es RootView.swift.
