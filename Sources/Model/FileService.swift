@@ -1,6 +1,23 @@
 import Foundation
 
 enum FileService {
+    // MARK: - Leer archivo
+
+    static func read(path: String) throws -> (lines: [String], lineEnding: LineEnding) {
+        let raw = try String(contentsOfFile: path, encoding: .utf8)
+        let hasCRLF = raw.contains("\r\n")
+        let lineEnding: LineEnding = hasCRLF ? .crlf : .lf
+        let normalized = raw
+            .replacingOccurrences(of: "\r\n", with: "\n")
+            .replacingOccurrences(of: "\r", with: "\n")
+        var lines = normalized.components(separatedBy: "\n")
+        // Quitar última línea vacía si el archivo termina con salto de línea
+        if lines.last == "" { lines.removeLast() }
+        return (lines.isEmpty ? [""] : lines, lineEnding)
+    }
+
+    // MARK: - Listar directorio
+
     static let configExtensions: Set<String> = [
         "conf", "cfg", "ini", "yaml", "yml", "toml", "env", "json",
         "properties", "plist", "xml", "sh", "bash", "zsh", "fish"

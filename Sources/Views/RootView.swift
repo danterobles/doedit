@@ -16,15 +16,24 @@ struct RootView: View {
                 SidebarView(state: state)
             },
             detail: {
-                VStack {
-                    Text("doedit")
-                        .bold()
-                    Text(state.selectedFileID ?? "Selecciona un archivo del panel lateral")
-                        .foregroundStyle(.palette.foregroundSecondary)
+                if let buffer = state.activeBuffer {
+                    EditorView(buffer: buffer)
+                } else {
+                    VStack {
+                        Text("doedit")
+                            .bold()
+                        Text(state.errorMessage ?? "Selecciona un archivo del panel lateral")
+                            .foregroundStyle(.palette.foregroundSecondary)
+                    }
+                    .padding()
                 }
-                .padding()
             }
         )
+        .onChange(of: state.selectedFileID) { _, path in
+            if let path {
+                state.openFile(path)
+            }
+        }
         .onKeyPress { event in
             if event.ctrl && event.key == .character("b") {
                 columnVisibility = columnVisibility == .all ? .detailOnly : .all
@@ -36,6 +45,9 @@ struct RootView: View {
             statusBar.quitShortcut = .ctrlQ
         }
         .statusBarItems(.replace) {
+            if let buffer = state.activeBuffer, buffer.isDirty {
+                StatusBarItem(shortcut: "*", label: "modificado")
+            }
             StatusBarItem(shortcut: Shortcut.ctrl("b"), label: "sidebar")
             StatusBarItem(shortcut: Shortcut.ctrl("q"), label: "salir")
         }
