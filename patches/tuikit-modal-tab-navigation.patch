@@ -1,0 +1,48 @@
+diff --git a/Sources/TUIkit/Modifiers/AlertPresentationModifier.swift b/Sources/TUIkit/Modifiers/AlertPresentationModifier.swift
+index 8523325..104ae39 100644
+--- a/Sources/TUIkit/Modifiers/AlertPresentationModifier.swift
++++ b/Sources/TUIkit/Modifiers/AlertPresentationModifier.swift
+@@ -97,10 +97,18 @@ extension AlertPresentationModifier: Renderable {
+         // Register an alert focus section and activate it.
+         // The alert section becomes the active section, so Tab/arrows
+         // only navigate within the alert's focusable elements (buttons).
++        //
++        // Only call activateSection when the alert first appears. On subsequent
++        // render passes the section is already active (activeSectionID is preserved
++        // through beginRenderPass), so calling activateSection would reset focusedID
++        // to nil and undo any Tab navigation the user performed within the alert.
+         let sectionID = Self.alertSectionID
+         if !context.isMeasuring {
++            let wasAlreadyActive = focusManager.isActiveSection(sectionID)
+             focusManager.registerSection(id: sectionID)
+-            focusManager.activateSection(id: sectionID)
++            if !wasAlreadyActive {
++                focusManager.activateSection(id: sectionID)
++            }
+         }
+
+         // Register ESC handler to dismiss the alert
+diff --git a/Sources/TUIkit/Modifiers/ModalPresentationModifier.swift b/Sources/TUIkit/Modifiers/ModalPresentationModifier.swift
+index 89bd41e..09f392a 100644
+--- a/Sources/TUIkit/Modifiers/ModalPresentationModifier.swift
++++ b/Sources/TUIkit/Modifiers/ModalPresentationModifier.swift
+@@ -64,10 +64,18 @@ extension ModalPresentationModifier: Renderable {
+         // This replaces the previous focusManager.clear() approach.
+         // The modal section becomes the active section, so Tab/arrows
+         // only navigate within the modal's focusable elements.
++        //
++        // Only call activateSection when the modal first appears. On subsequent
++        // render passes the section is already active (activeSectionID is preserved
++        // through beginRenderPass), so calling activateSection would reset focusedID
++        // to nil and undo any Tab navigation the user performed within the alert.
+         let sectionID = Self.modalSectionID
+         if !context.isMeasuring {
++            let wasAlreadyActive = focusManager.isActiveSection(sectionID)
+             focusManager.registerSection(id: sectionID)
+-            focusManager.activateSection(id: sectionID)
++            if !wasAlreadyActive {
++                focusManager.activateSection(id: sectionID)
++            }
+         }
+
+         // Set the modal section in the context so child focusables
