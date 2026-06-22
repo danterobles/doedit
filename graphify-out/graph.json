@@ -9,7 +9,7 @@
       "source_file": "Package.swift",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 9,
+      "community": 11,
       "norm_label": "package.swift",
       "id": "package"
     },
@@ -79,7 +79,7 @@
       "source_file": "Sources/ContentView.swift",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 10,
+      "community": 12,
       "norm_label": "contentview.swift",
       "id": "sources_contentview"
     },
@@ -449,7 +449,7 @@
       "source_file": "Sources/Model/FileService.swift",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 7,
+      "community": 8,
       "norm_label": "fileservice",
       "id": "model_fileservice_fileservice"
     },
@@ -459,7 +459,7 @@
       "source_file": "Sources/Model/FileService.swift",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 7,
+      "community": 8,
       "norm_label": ".read()",
       "id": "model_fileservice_fileservice_read"
     },
@@ -469,7 +469,7 @@
       "source_file": "Sources/Model/FileService.swift",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 7,
+      "community": 8,
       "norm_label": "string",
       "id": "sources_model_fileservice_swift_string"
     },
@@ -479,7 +479,7 @@
       "source_file": "Sources/Model/FileService.swift",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 7,
+      "community": 8,
       "norm_label": "lineending",
       "id": "lineending"
     },
@@ -489,7 +489,7 @@
       "source_file": "Sources/Model/FileService.swift",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 7,
+      "community": 8,
       "norm_label": "set",
       "id": "set"
     },
@@ -499,7 +499,7 @@
       "source_file": "Sources/Model/FileService.swift",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 7,
+      "community": 8,
       "norm_label": ".list()",
       "id": "model_fileservice_fileservice_list"
     },
@@ -509,7 +509,7 @@
       "source_file": "Sources/Model/FileService.swift",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 7,
+      "community": 8,
       "norm_label": "bool",
       "id": "sources_model_fileservice_swift_bool"
     },
@@ -519,7 +519,7 @@
       "source_file": "Sources/Model/FileService.swift",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 7,
+      "community": 8,
       "norm_label": "fileentry",
       "id": "sources_model_fileservice_swift_fileentry"
     },
@@ -1119,7 +1119,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "editorview.swift",
       "id": "views_editorview"
     },
@@ -1129,7 +1129,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "editorview",
       "id": "views_editorview_editorview"
     },
@@ -1139,7 +1139,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "view",
       "id": "view"
     },
@@ -1149,7 +1149,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "textbuffer",
       "id": "sources_views_editorview_swift_textbuffer"
     },
@@ -1159,7 +1159,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "clipboard",
       "id": "sources_views_editorview_swift_clipboard"
     },
@@ -1169,7 +1169,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "_editorviewcore",
       "id": "views_editorview_editorviewcore"
     },
@@ -1179,7 +1179,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "renderable",
       "id": "renderable"
     },
@@ -1189,7 +1189,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "never",
       "id": "never"
     },
@@ -1199,7 +1199,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": ".rendertobuffer()",
       "id": "views_editorview_editorviewcore_rendertobuffer"
     },
@@ -1209,7 +1209,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "rendercontext",
       "id": "rendercontext"
     },
@@ -1219,7 +1219,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "framebuffer",
       "id": "framebuffer"
     },
@@ -1229,7 +1229,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": ".renderline()",
       "id": "views_editorview_editorviewcore_renderline"
     },
@@ -1239,7 +1239,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "string",
       "id": "sources_views_editorview_swift_string"
     },
@@ -1249,7 +1249,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "int",
       "id": "sources_views_editorview_swift_int"
     },
@@ -1259,7 +1259,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "range",
       "id": "sources_views_editorview_swift_range"
     },
@@ -1269,7 +1269,7 @@
       "source_file": "Sources/Views/EditorView.swift",
       "source_location": "L96",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": ".registerhandler()",
       "id": "views_editorview_editorviewcore_registerhandler"
     },
@@ -1279,7 +1279,7 @@
       "source_file": "Sources/Views/GoToLinePrompt.swift",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 3,
       "norm_label": "gotolineprompt.swift",
       "id": "views_gotolineprompt"
     },
@@ -1289,7 +1289,7 @@
       "source_file": "Sources/Views/GoToLinePrompt.swift",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 8,
+      "community": 9,
       "norm_label": "gotolineprompt",
       "id": "views_gotolineprompt_gotolineprompt"
     },
@@ -1299,7 +1299,7 @@
       "source_file": "Sources/Views/GoToLinePrompt.swift",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 8,
+      "community": 9,
       "norm_label": "binding",
       "id": "sources_views_gotolineprompt_swift_binding"
     },
@@ -1309,7 +1309,7 @@
       "source_file": "Sources/Views/GoToLinePrompt.swift",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 8,
+      "community": 9,
       "norm_label": "bool",
       "id": "sources_views_gotolineprompt_swift_bool"
     },
@@ -1319,7 +1319,7 @@
       "source_file": "Sources/Views/GoToLinePrompt.swift",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 8,
+      "community": 9,
       "norm_label": "editorstate",
       "id": "sources_views_gotolineprompt_swift_editorstate"
     },
@@ -1329,7 +1329,7 @@
       "source_file": "Sources/Views/GoToLinePrompt.swift",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 8,
+      "community": 9,
       "norm_label": ".submitgoto()",
       "id": "views_gotolineprompt_gotolineprompt_submitgoto"
     },
@@ -1339,7 +1339,7 @@
       "source_file": "Sources/Views/ReplacePrompt.swift",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "replaceprompt.swift",
       "id": "views_replaceprompt"
     },
@@ -1349,7 +1349,7 @@
       "source_file": "Sources/Views/ReplacePrompt.swift",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 2,
+      "community": 10,
       "norm_label": "replaceprompt",
       "id": "views_replaceprompt_replaceprompt"
     },
@@ -1359,7 +1359,7 @@
       "source_file": "Sources/Views/ReplacePrompt.swift",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 10,
       "norm_label": "binding",
       "id": "sources_views_replaceprompt_swift_binding"
     },
@@ -1369,7 +1369,7 @@
       "source_file": "Sources/Views/ReplacePrompt.swift",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 10,
       "norm_label": "bool",
       "id": "sources_views_replaceprompt_swift_bool"
     },
@@ -1379,7 +1379,7 @@
       "source_file": "Sources/Views/ReplacePrompt.swift",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 2,
+      "community": 10,
       "norm_label": "editorstate",
       "id": "sources_views_replaceprompt_swift_editorstate"
     },
@@ -1389,7 +1389,7 @@
       "source_file": "Sources/Views/ReplacePrompt.swift",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 2,
+      "community": 10,
       "norm_label": ".replaceall()",
       "id": "views_replaceprompt_replaceprompt_replaceall"
     },
@@ -1399,7 +1399,7 @@
       "source_file": "Sources/Views/RootView.swift",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "rootview.swift",
       "id": "views_rootview"
     },
@@ -1409,7 +1409,7 @@
       "source_file": "Sources/Views/RootView.swift",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "rootview",
       "id": "views_rootview_rootview"
     },
@@ -1419,7 +1419,7 @@
       "source_file": "Sources/Views/RootView.swift",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "editorstate",
       "id": "sources_views_rootview_swift_editorstate"
     },
@@ -1429,7 +1429,7 @@
       "source_file": "Sources/Views/RootView.swift",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "string",
       "id": "sources_views_rootview_swift_string"
     },
@@ -1439,7 +1439,7 @@
       "source_file": "Sources/Views/RootView.swift",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": ".init()",
       "id": "views_rootview_rootview_init"
     },
@@ -1449,7 +1449,7 @@
       "source_file": "Sources/Views/SearchPrompt.swift",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "searchprompt.swift",
       "id": "views_searchprompt"
     },
@@ -1499,7 +1499,7 @@
       "source_file": "Sources/Views/SidebarView.swift",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "sidebarview.swift",
       "id": "views_sidebarview"
     },
@@ -1545,7 +1545,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 9,
+      "community": 11,
       "norm_label": "tuikit (external dependency)",
       "id": "tuikit_dep"
     },
@@ -1636,7 +1636,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 2,
       "norm_label": "rendertobuffer",
       "id": "views_editorview_rendertobuffer"
     },
@@ -1649,7 +1649,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 2,
       "norm_label": "renderline",
       "id": "views_editorview_renderline"
     },
@@ -1662,7 +1662,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 2,
       "norm_label": "registerhandler",
       "id": "views_editorview_registerhandler"
     },
@@ -1675,7 +1675,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 3,
       "norm_label": "submitgoto",
       "id": "views_gotolineprompt_submitgoto"
     },
@@ -1688,7 +1688,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 3,
       "norm_label": "rangehinttext",
       "id": "views_gotolineprompt_rangehinttext"
     },
@@ -1701,7 +1701,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "matchstatustext (replaceprompt)",
       "id": "views_replaceprompt_matchstatustext"
     },
@@ -1714,7 +1714,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "replaceall",
       "id": "views_replaceprompt_replaceall"
     },
@@ -1727,7 +1727,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "matchstatustext (searchprompt)",
       "id": "views_searchprompt_matchstatustext"
     },
@@ -1740,7 +1740,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "phase-check skill",
       "id": "skill_phase_check"
     },
@@ -1753,7 +1753,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "run skill",
       "id": "skill_run"
     },
@@ -1766,7 +1766,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "doedit readme",
       "id": "readme_doedit"
     },
@@ -1779,7 +1779,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "plan tui config editor",
       "id": "plan_tui_config_editor"
     },
@@ -1792,7 +1792,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "phase 0 - scaffold and discovery",
       "id": "plan_phase0"
     },
@@ -1805,7 +1805,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "phase 1 - sidebar",
       "id": "plan_phase1"
     },
@@ -1818,7 +1818,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 2,
       "norm_label": "phase 2 - text editing engine",
       "id": "plan_phase2"
     },
@@ -1831,7 +1831,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "phase 3 - save and quit",
       "id": "plan_phase3"
     },
@@ -1844,7 +1844,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "phase 4 - copy and move text",
       "id": "plan_phase4"
     },
@@ -1857,7 +1857,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "phase 5 - search and go to line",
       "id": "plan_phase5"
     },
@@ -1870,7 +1870,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "phase 6 - find and replace",
       "id": "plan_phase6"
     },
@@ -1883,7 +1883,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "phase 7 - polish and tests",
       "id": "plan_phase7"
     },
@@ -1896,7 +1896,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 2,
       "norm_label": "renderable protocol pattern",
       "id": "plan_renderable_pattern"
     },
@@ -1909,7 +1909,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 2,
       "norm_label": "textbuffer [string] array design rationale",
       "id": "plan_textbuffer_array_rationale"
     },
@@ -1922,7 +1922,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "ixon raw mode rationale",
       "id": "plan_ixon_rationale"
     },
@@ -1935,9 +1935,115 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 2,
+      "community": 3,
       "norm_label": "notificationservice",
       "id": "plan_notificationservice"
+    },
+    {
+      "label": "apply-patches.sh",
+      "file_type": "code",
+      "source_file": "scripts/apply-patches.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "scripts_apply_patches",
+      "community": 7,
+      "norm_label": "apply-patches.sh"
+    },
+    {
+      "label": "apply-patches.sh script",
+      "file_type": "code",
+      "source_file": "scripts/apply-patches.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "users_danterobles_desktop_github_doedit_scripts_apply_patches_sh__entry",
+      "community": 7,
+      "norm_label": "apply-patches.sh script"
+    },
+    {
+      "label": "tuikit-sidebar-overflow.patch",
+      "file_type": "code",
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "patches_tuikit_sidebar_overflow_patch",
+      "community": 7,
+      "norm_label": "tuikit-sidebar-overflow.patch"
+    },
+    {
+      "label": "tuikit-modal-tab-navigation.patch",
+      "file_type": "code",
+      "source_file": "patches/tuikit-modal-tab-navigation.patch",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "patches_tuikit_modal_tab_navigation_patch",
+      "community": 7,
+      "norm_label": "tuikit-modal-tab-navigation.patch"
+    },
+    {
+      "label": "TUIkit _ListCore",
+      "file_type": "code",
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": "Sources/TUIkit/Views/_ListCore.swift",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "tuikit_listcore_listcore",
+      "community": 7,
+      "norm_label": "tuikit _listcore"
+    },
+    {
+      "label": "Sidebar Row Overflow Fix",
+      "file_type": "rationale",
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": "Dante Robles",
+      "id": "concept_sidebar_overflow_fix",
+      "community": 7,
+      "norm_label": "sidebar row overflow fix"
+    },
+    {
+      "label": "Row Truncation with Ellipsis",
+      "file_type": "concept",
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "concept_row_truncation_ellipsis",
+      "community": 7,
+      "norm_label": "row truncation with ellipsis"
+    },
+    {
+      "label": "TUIkit SPM Checkout (.build/checkouts/TUIkit)",
+      "file_type": "code",
+      "source_file": "scripts/apply-patches.sh",
+      "source_location": ".build/checkouts/TUIkit",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "tuikit_build_checkout",
+      "community": 7,
+      "norm_label": "tuikit spm checkout (.build/checkouts/tuikit)"
     }
   ],
   "links": [
@@ -4989,8 +5095,108 @@
       "weight": 1.0,
       "source": "plan_textbuffer_array_rationale",
       "target": "plan_phase2"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/apply-patches.sh",
+      "source_location": "line 22",
+      "weight": 1.0,
+      "source": "scripts_apply_patches",
+      "target": "patches_tuikit_modal_tab_navigation_patch"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/apply-patches.sh",
+      "source_location": "line 30",
+      "weight": 1.0,
+      "source": "scripts_apply_patches",
+      "target": "patches_tuikit_sidebar_overflow_patch"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/apply-patches.sh",
+      "source_location": "line 10",
+      "weight": 1.0,
+      "source": "scripts_apply_patches",
+      "target": "tuikit_build_checkout"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "scripts/apply-patches.sh",
+      "source_location": null,
+      "weight": 0.7,
+      "source": "scripts_apply_patches",
+      "target": "tuikit_listcore_listcore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/apply-patches.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "scripts_apply_patches",
+      "target": "users_danterobles_desktop_github_doedit_scripts_apply_patches_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": "line 30",
+      "weight": 1.0,
+      "source": "patches_tuikit_sidebar_overflow_patch",
+      "target": "concept_row_truncation_ellipsis"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "patches_tuikit_sidebar_overflow_patch",
+      "target": "concept_sidebar_overflow_fix"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": "Sources/TUIkit/Views/_ListCore.swift",
+      "weight": 1.0,
+      "source": "patches_tuikit_sidebar_overflow_patch",
+      "target": "tuikit_listcore_listcore"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concept_sidebar_overflow_fix",
+      "target": "tuikit_listcore_listcore"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "patches/tuikit-sidebar-overflow.patch",
+      "source_location": null,
+      "weight": 0.8,
+      "source": "concept_row_truncation_ellipsis",
+      "target": "concept_sidebar_overflow_fix"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f5a84b169d165fec5c6ac6395f2039cd52d57596"
+  "built_at_commit": "03e0a97076e6d8a6b38448c9840b9d25ebec490e"
 }
