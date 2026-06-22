@@ -110,9 +110,9 @@
     "semantic_hash": "746a4e64e3645f38b5a6be27edd983ee"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Package.swift": {
-    "mtime": 1781548702.8836102,
-    "ast_hash": "157bbec3baf9a816bbf0b2340d3c36b4",
-    "semantic_hash": "157bbec3baf9a816bbf0b2340d3c36b4"
+    "mtime": 1782158055.6254733,
+    "ast_hash": "3f1d4b3b8099f82ff461d8c06b4b516a",
+    "semantic_hash": "3f1d4b3b8099f82ff461d8c06b4b516a"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/App.swift": {
     "mtime": 1781550207.3330538,
@@ -125,69 +125,69 @@
     "semantic_hash": "4ac1e45332353688d7e271b8be0d732e"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Input/EditorHandler.swift": {
-    "mtime": 1781554521.0704172,
-    "ast_hash": "bdd38ec65566b0d84ac1fd903e7cecf6",
-    "semantic_hash": "bdd38ec65566b0d84ac1fd903e7cecf6"
+    "mtime": 1782158698.3809776,
+    "ast_hash": "60fb543d81e431ca814931bf2038a93c",
+    "semantic_hash": "60fb543d81e431ca814931bf2038a93c"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Model/EditorState.swift": {
-    "mtime": 1781553839.4211512,
-    "ast_hash": "3ada0bc8940ed8dd08f933ede30c10ec",
-    "semantic_hash": "3ada0bc8940ed8dd08f933ede30c10ec"
+    "mtime": 1782158689.4439788,
+    "ast_hash": "354e8b4aa6506127c3ac4a5996415946",
+    "semantic_hash": "354e8b4aa6506127c3ac4a5996415946"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Model/FileEntry.swift": {
-    "mtime": 1781550183.716216,
-    "ast_hash": "f17ad8e13ca00430036b6e56f5676314",
-    "semantic_hash": "f17ad8e13ca00430036b6e56f5676314"
+    "mtime": 1782157968.5519857,
+    "ast_hash": "073ed345f38433cb83ad709c891c4bb0",
+    "semantic_hash": "073ed345f38433cb83ad709c891c4bb0"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Model/FileService.swift": {
-    "mtime": 1781550835.6259887,
-    "ast_hash": "8b4e8525f344ace29233eda1055cff86",
-    "semantic_hash": "8b4e8525f344ace29233eda1055cff86"
+    "mtime": 1782158672.7369752,
+    "ast_hash": "7b99e7bfdb65091a0bc38ebadb1292f8",
+    "semantic_hash": "7b99e7bfdb65091a0bc38ebadb1292f8"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Model/SearchEngine.swift": {
-    "mtime": 1781552641.1217637,
-    "ast_hash": "7836e80c0c3cb930859a61d464ea7fc4",
-    "semantic_hash": "7836e80c0c3cb930859a61d464ea7fc4"
+    "mtime": 1782157946.4050577,
+    "ast_hash": "4461fcdcc1137ebc663b746c84b0b05a",
+    "semantic_hash": "4461fcdcc1137ebc663b746c84b0b05a"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Model/Selection.swift": {
-    "mtime": 1781551891.6603563,
-    "ast_hash": "202aaf304515ec959f55efd6a30690c7",
-    "semantic_hash": "202aaf304515ec959f55efd6a30690c7"
+    "mtime": 1782157939.7802787,
+    "ast_hash": "12622192100e090b105cbcce861ead9b",
+    "semantic_hash": "12622192100e090b105cbcce861ead9b"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Model/TextBuffer.swift": {
-    "mtime": 1781554508.7763574,
-    "ast_hash": "fa3fd5bb3adaeda79be290a67f7c8dd1",
-    "semantic_hash": "fa3fd5bb3adaeda79be290a67f7c8dd1"
+    "mtime": 1782158680.3611736,
+    "ast_hash": "1c24eed6b6b5a09c6cb45cbe31526dab",
+    "semantic_hash": "1c24eed6b6b5a09c6cb45cbe31526dab"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Views/EditorView.swift": {
-    "mtime": 1781551984.2878168,
-    "ast_hash": "ce929aa8101695f2b630cfa2f51146cb",
-    "semantic_hash": "ce929aa8101695f2b630cfa2f51146cb"
+    "mtime": 1782157985.6611876,
+    "ast_hash": "3bee9444c8012e7ab2b107581b857930",
+    "semantic_hash": "3bee9444c8012e7ab2b107581b857930"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Views/GoToLinePrompt.swift": {
-    "mtime": 1781552685.8558433,
-    "ast_hash": "2764f1b84208441aadfc5da8a2eab1d9",
-    "semantic_hash": "2764f1b84208441aadfc5da8a2eab1d9"
+    "mtime": 1782157989.2381945,
+    "ast_hash": "10f8530672b584c878418df152f9e8e2",
+    "semantic_hash": "10f8530672b584c878418df152f9e8e2"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Views/ReplacePrompt.swift": {
-    "mtime": 1781553853.267232,
-    "ast_hash": "a492dd483e21380f01b2a4cdc39a7496",
-    "semantic_hash": "a492dd483e21380f01b2a4cdc39a7496"
+    "mtime": 1782157990.4661903,
+    "ast_hash": "c9a707282072a58235045e8a062be122",
+    "semantic_hash": "c9a707282072a58235045e8a062be122"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Views/RootView.swift": {
-    "mtime": 1781554528.8474257,
-    "ast_hash": "020bdbd0ae27e4689ef4c2e9f060a03e",
-    "semantic_hash": "020bdbd0ae27e4689ef4c2e9f060a03e"
+    "mtime": 1782158715.0146587,
+    "ast_hash": "ba7d54d90f3bd95b220afc1194eaf8fc",
+    "semantic_hash": "ba7d54d90f3bd95b220afc1194eaf8fc"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Views/SearchPrompt.swift": {
-    "mtime": 1781552676.2291298,
-    "ast_hash": "3a7ce4f1a43cc1a50a95b0298553a7cf",
-    "semantic_hash": "3a7ce4f1a43cc1a50a95b0298553a7cf"
+    "mtime": 1782157990.0416107,
+    "ast_hash": "7c85d14cf242d1cb90e4ee077ed2fecd",
+    "semantic_hash": "7c85d14cf242d1cb90e4ee077ed2fecd"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/Sources/Views/SidebarView.swift": {
-    "mtime": 1781550196.3367352,
-    "ast_hash": "8df503795815109ba150e37811b5fa99",
-    "semantic_hash": "8df503795815109ba150e37811b5fa99"
+    "mtime": 1782157987.571421,
+    "ast_hash": "99bfd3ba4a521be397e9560431a77132",
+    "semantic_hash": "99bfd3ba4a521be397e9560431a77132"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/scripts/apply-patches.sh": {
     "mtime": 1782149207.1653414,
@@ -205,13 +205,28 @@
     "semantic_hash": "17a15324a0e633756352594787db74d9"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/README.md": {
-    "mtime": 1781549916.7291873,
-    "ast_hash": "f8f9bcffbef52b05ee7c59f3ceec3b11",
-    "semantic_hash": "f8f9bcffbef52b05ee7c59f3ceec3b11"
+    "mtime": 1782158761.6345706,
+    "ast_hash": "58007614775133fb4070cb1b38da3f41",
+    "semantic_hash": "58007614775133fb4070cb1b38da3f41"
   },
   "/Users/danterobles/Desktop/GitHub/doedit/plan-tui-config-editor.md": {
     "mtime": 1781548717.1557534,
     "ast_hash": "5fbe602f3ecc4fc866476457758ab300",
     "semantic_hash": "5fbe602f3ecc4fc866476457758ab300"
+  },
+  "/Users/danterobles/Desktop/GitHub/doedit/Tests/SearchReplaceTests.swift": {
+    "mtime": 1782158029.8892095,
+    "ast_hash": "b8e9ffaa38fb2f75bcf6a4f40a622a8d",
+    "semantic_hash": "b8e9ffaa38fb2f75bcf6a4f40a622a8d"
+  },
+  "/Users/danterobles/Desktop/GitHub/doedit/Tests/SelectionTests.swift": {
+    "mtime": 1782158019.7127602,
+    "ast_hash": "14516b0cfa60d3e827b849b94a97dd5f",
+    "semantic_hash": "14516b0cfa60d3e827b849b94a97dd5f"
+  },
+  "/Users/danterobles/Desktop/GitHub/doedit/Tests/TextBufferTests.swift": {
+    "mtime": 1782158009.8136635,
+    "ast_hash": "b9d9737bed5f8a33021755070f4d66c7",
+    "semantic_hash": "b9d9737bed5f8a33021755070f4d66c7"
   }
 }
