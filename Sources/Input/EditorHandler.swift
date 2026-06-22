@@ -16,6 +16,22 @@ final class EditorHandler: Focusable, @unchecked Sendable {
         // Tab → navegación de foco entre paneles (FocusManager lo maneja)
         if event.key == .tab { return false }
 
+        // En modo solo lectura bloquear mutaciones; permitir navegación y Alt+C (copiar)
+        if buffer.isReadOnly {
+            if event.alt, case .character("c") = event.key {
+                // Alt+C (copiar selección) — permitido, continuar
+            } else if !event.ctrl && !event.alt {
+                switch event.key {
+                case .left, .right, .up, .down, .home, .end, .pageUp, .pageDown:
+                    break // navegación permitida
+                default:
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+
         // Alt+letra — solo Alt+C (copiar); resto pasa al sistema
         if event.alt {
             guard case .character("c") = event.key else { return false }

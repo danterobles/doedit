@@ -27,6 +27,7 @@ public final class TextBuffer: @unchecked Sendable {
 
     public var lastViewportHeight: Int = 24
     public var lastViewportWidth: Int = 80
+    public var isReadOnly: Bool = false
 
     public var selection: Selection? = nil
 

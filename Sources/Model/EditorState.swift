@@ -37,19 +37,22 @@ public final class EditorState: @unchecked Sendable {
     public func openFile(_ path: String) {
         do {
             let (lines, ending) = try FileService.read(path: path)
-            activeBuffer = TextBuffer(lines: lines, filePath: path, lineEnding: ending)
+            let buffer = TextBuffer(lines: lines, filePath: path, lineEnding: ending)
+            buffer.isReadOnly = !FileManager.default.isWritableFile(atPath: path)
+            activeBuffer = buffer
             errorMessage = nil
             // Limpia búsqueda activa al abrir nuevo archivo
             searchMatches = []
             currentMatchIndex = 0
         } catch {
-            errorMessage = "No se pudo abrir: \(error.localizedDescription)"
+            errorMessage = error.localizedDescription
             activeBuffer = nil
         }
     }
 
     public func saveCurrentBuffer() throws {
         guard let buffer = activeBuffer, let path = buffer.filePath else { return }
+        guard !buffer.isReadOnly else { return }
         let content = buffer.serialize()
         try content.write(toFile: path, atomically: true, encoding: .utf8)
         buffer.markClean()

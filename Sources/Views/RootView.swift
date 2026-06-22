@@ -42,6 +42,10 @@ struct RootView: View {
             if event.ctrl {
                 switch event.key {
                 case .character("s"):
+                    if state.activeBuffer?.isReadOnly == true {
+                        NotificationService.current.post("Solo lectura")
+                        return true
+                    }
                     do {
                         try state.saveCurrentBuffer()
                         NotificationService.current.post("Guardado")
@@ -97,6 +101,9 @@ struct RootView: View {
         }
         .statusBarItems(.replace) {
             if let buffer = state.activeBuffer {
+                if buffer.isReadOnly {
+                    StatusBarItem(shortcut: "RO", label: "solo lectura")
+                }
                 if buffer.isDirty {
                     StatusBarItem(shortcut: "*", label: "modificado")
                 }

@@ -1,40 +1,166 @@
 # doedit
 
-Editor TUI de archivos de configuración, estilo nano. Construido sobre [TUIkit](https://github.com/phranck/TUIkit).
+Editor TUI de archivos de configuración, estilo nano. Construido en Swift puro sobre [TUIkit](https://github.com/phranck/TUIkit), sin ncurses ni dependencias C.
 
-## Compilar y ejecutar
+---
+
+## Requisitos
+
+- macOS 15+ (o Linux con Swift 6.0+)
+- Swift 6.0+
+
+---
+
+## Instalación
 
 ```bash
+git clone https://github.com/danterobles/doedit
+cd doedit
 swift build -c release
-swift run                          # desarrollo
-.build/release/doedit              # binario release
-swift test                         # pruebas (cuando existan)
 ```
 
-## Fase 0 — Discovery de TUIkit (hallazgos verificados)
+El binario queda en `.build/release/doedit`. Para instalarlo globalmente:
 
-> Fuente: código fuente resuelto por SPM en `.build/checkouts/TUIkit/`. No se asume el README.
+```bash
+cp .build/release/doedit /usr/local/bin/
+# o en Linux sin permisos de root:
+cp .build/release/doedit ~/.local/bin/
+```
+
+---
+
+## Uso
+
+```bash
+doedit                    # abre el directorio actual
+doedit /ruta/al/dir       # abre un directorio específico
+```
+
+Al arrancar, el panel lateral muestra los archivos del directorio indicado. Navega con las flechas y pulsa `Enter` para abrir un archivo. El panel se puede colapsar con `Ctrl+B` para ganar espacio en el editor.
+
+---
+
+## Atajos de teclado
+
+### Globales
+
+| Acción | Atajo |
+|--------|-------|
+| Guardar | `Ctrl+S` |
+| Salir | `Ctrl+Q` |
+| Colapsar / expandir sidebar | `Ctrl+B` |
+| Cambiar foco sidebar ↔ editor | `Tab` / `Shift+Tab` |
+
+### Edición
+
+| Acción | Atajo |
+|--------|-------|
+| Deshacer | `Ctrl+Z` |
+| Rehacer | `Ctrl+Y` |
+| Nueva línea | `Enter` |
+| Borrar hacia atrás | `Backspace` |
+| Borrar hacia adelante | `Supr` |
+| Cortar línea (o selección activa) | `Ctrl+K` |
+| Pegar | `Ctrl+U` |
+
+### Selección y portapapeles
+
+| Acción | Atajo |
+|--------|-------|
+| Iniciar / extender selección | `Shift+Flechas`, `Shift+Home`, `Shift+End` |
+| Copiar selección | `Alt+C` |
+| Cortar selección | `Ctrl+K` |
+
+### Navegación
+
+| Acción | Atajo |
+|--------|-------|
+| Mover cursor | Flechas |
+| Inicio / fin de línea | `Home` / `End` |
+| Página arriba / abajo | `PageUp` / `PageDown` |
+| Ir a línea específica | `Ctrl+G` |
+
+### Búsqueda y reemplazo
+
+| Acción | Atajo |
+|--------|-------|
+| Buscar | `Ctrl+W` |
+| Siguiente coincidencia | `Alt+W` |
+| Coincidencia anterior | `Alt+Shift+W` |
+| Buscar y reemplazar | `Ctrl+R` |
+| Cerrar cualquier prompt | `Esc` |
+
+---
+
+## Limitaciones conocidas
+
+- **Sin portapapeles del sistema**: copiar / pegar opera dentro de doedit únicamente; no intercambia con el portapapeles del SO.
+- **Sin soporte de ratón**: navegación exclusivamente por teclado.
+- **UTF-8 solamente**: archivos en otras codificaciones (Latin-1, UTF-16, etc.) son rechazados al abrirse con un aviso.
+- **Archivos binarios**: detectados por la presencia de bytes nulos; se muestran en el sidebar pero no se pueden abrir.
+- **Solo lectura**: los archivos sin permiso de escritura se abren en modo `RO` (indicado en la barra de estado); las teclas de edición quedan bloqueadas.
+- **Pila de deshacer limitada a 50 pasos**: el estado más antiguo se descarta al superar ese límite.
+- **Sin resaltado de sintaxis**: el editor es genérico; no colorea por tipo de archivo de configuración.
+- **Buffer por líneas (`[String]`)**: adecuado para archivos de configuración pequeños y medianos. No optimizado para archivos de varios megabytes.
+- **Linux**: el código compila con Swift 6.0 en Linux pero no está verificado en CI continua.
+
+---
+
+## Desarrollo
+
+```bash
+swift build          # compilación debug
+swift test           # suite de tests del núcleo (40 tests)
+swift run doedit .   # ejecutar en el directorio actual
+```
+
+Los tests cubren `TextBuffer`, `Selection` y búsqueda / reemplazo sin necesidad de terminal.
+
+---
+
+## Arquitectura
+
+```
+Sources/
+├── App.swift               # @main, punto de entrada
+├── Model/                  # doeditCore (librería importable por tests)
+│   ├── TextBuffer.swift    # motor de edición: líneas, cursor, undo/redo
+│   ├── Selection.swift     # rango de selección y portapapeles
+│   ├── SearchEngine.swift  # búsqueda case-sensitive / insensitive
+│   ├── EditorState.swift   # estado global observable
+│   ├── FileEntry.swift     # descriptor de archivo en el sidebar
+│   └── FileService.swift   # leer / listar archivos, detección de binarios
+├── Views/
+│   ├── RootView.swift      # NavigationSplitView + atajos globales
+│   ├── SidebarView.swift   # lista de archivos
+│   ├── EditorView.swift    # render del buffer con cursor y scroll
+│   ├── GoToLinePrompt.swift
+│   ├── SearchPrompt.swift
+│   └── ReplacePrompt.swift
+└── Input/
+    └── EditorHandler.swift # dispatch de teclas al buffer
+Tests/
+├── TextBufferTests.swift   # 16 tests
+├── SelectionTests.swift    # 12 tests
+└── SearchReplaceTests.swift# 12 tests
+```
+
+El modelo (`Sources/Model/`) está desacoplado de TUIkit y compilado como librería independiente (`doeditCore`), lo que permite ejecutar los tests sin terminal.
+
+---
+
+<details>
+<summary>Discovery de API de TUIkit (Fase 0 — referencia interna)</summary>
 
 ### 1. Firma de `.onKeyPress()` y modificadores
-
-Tres overloads en `Extensions/View+Events.swift`:
 
 ```swift
 // Captura cualquier tecla; devolver true consume el evento
 func onKeyPress(_ handler: @escaping (KeyEvent) -> Bool) -> some View
 
-// Filtrar a un conjunto de teclas
-func onKeyPress(keys: Set<Key>, handler: @escaping (KeyEvent) -> Bool) -> some View
-
-// Tecla única; siempre consume (sin valor de retorno)
-func onKeyPress(_ key: Key, action: @escaping () -> Void) -> some View
-```
-
-`KeyEvent` (en `TUIkitCore/Input/KeyEvent.swift`):
-
-```swift
+// KeyEvent
 public struct KeyEvent: Equatable, Sendable {
-    public let key: Key      // la tecla sin modificadores
+    public let key: Key
     public let ctrl: Bool
     public let alt: Bool
     public let shift: Bool
@@ -50,104 +176,49 @@ public enum Key: Hashable, Sendable {
 }
 ```
 
-Ctrl+S llega como `KeyEvent(key: .character("s"), ctrl: true)`. Los modificadores son campos Bool separados, no parte de `Key`.
+`Ctrl+S` llega como `KeyEvent(key: .character("s"), ctrl: true)`.
 
-### 2. Ctrl+S y Ctrl+Q llegan a la app (IXON deshabilitado)
+### 2. Ctrl+S y Ctrl+Q llegan a la app
 
-En `Rendering/Terminal.swift`, `enableRawMode()` deshabilita explícitamente IXON:
+`Terminal.enableRawMode()` deshabilita `IXON` explícitamente:
 
 ```swift
 raw.c_iflag &= ~TermFlag(IXON | ICRNL | BRKINT | INPCK | ISTRIP)
 ```
 
-**Resultado verificado:** `Ctrl+S` (0x13) y `Ctrl+Q` (0x11) NO son interceptados por el terminal; llegan como `KeyEvent(key: .character("s"/"q"), ctrl: true)`. No se necesita workaround.
+`Ctrl+S` (0x13) y `Ctrl+Q` (0x11) no son interceptados por el terminal. El shortcut de salida se configura con `statusBar.quitShortcut = .ctrlQ`.
 
-El shortcut de salida se configura con `statusBar.quitShortcut = .ctrlQ` via `@Environment(\.statusBar)`.
-
-### 3. API real de `NavigationSplitView`
-
-Dos y tres columnas, con o sin binding de visibilidad (`Views/NavigationSplitView.swift`):
+### 3. NavigationSplitView
 
 ```swift
-// Dos columnas, control de visibilidad
 NavigationSplitView(
-    columnVisibility: $visibility,
+    columnVisibility: $visibility,   // .all / .detailOnly
     sidebar: { SidebarView() },
     detail: { EditorView() }
 )
-
-// Valores de NavigationSplitViewVisibility:
-NavigationSplitViewVisibility.all          // muestra todas las columnas
-NavigationSplitViewVisibility.detailOnly   // oculta sidebar
-NavigationSplitViewVisibility.doubleColumn // oculta sidebar (2 columnas: content+detail)
-NavigationSplitViewVisibility.automatic    // resuelve a .all en TUIkit
 ```
 
-Para colapsar/expandir con `Ctrl+B`: `@State var visibility = NavigationSplitViewVisibility.all` → alternar a `.detailOnly`.
+### 4. Tamaño del terminal
 
-### 4. Tamaño del terminal en una vista
-
-**No existe `GeometryReader` ni `@Environment(\.terminalSize)`.**
-
-El tamaño está disponible únicamente en `RenderContext` dentro de vistas que implementan el protocolo `Renderable`:
+Solo disponible en `RenderContext` dentro de vistas `Renderable`:
 
 ```swift
 func renderToBuffer(context: RenderContext) -> FrameBuffer {
-    let width = context.availableWidth   // columnas de caracteres
-    let height = context.availableHeight // líneas visibles
+    let width  = context.availableWidth
+    let height = context.availableHeight
 }
 ```
 
-Las vistas `View` públicas con `body: some View` **no tienen acceso directo al tamaño**. El `EditorView` deberá implementar `Renderable` (como vista privada `_EditorViewCore`) para obtener las dimensiones del viewport en cada render.
+Las vistas públicas con `body: some View` no tienen acceso directo. `EditorView` usa una vista privada `_EditorViewCore: Renderable`.
 
-### 5. Texto invertido para el cursor
-
-`Text` tiene `.inverted()` (en `Views/Text.swift`):
+### 5. Cursor (texto invertido)
 
 ```swift
-Text("X").inverted()   // rende con colores intercambiados (cursor block)
+Text("X").inverted()   // intercambia fg/bg — cursor block
 ```
 
-`TextStyle` soporta: `foregroundColor`, `backgroundColor`, `isBold`, `isItalic`, `isUnderlined`, `isStrikethrough`, `isDim`, `isBlink`, `isInverted`.
+### 6. Estado observable
 
-No existe `.inverted()` en `View` genérico. Para contenedores, usar `.background(.white)` + `.foregroundStyle(.black)`.
+`@Observable` (macro Swift) + `@State` de TUIkit para tipos valor. Cada mutación llama `AppState.shared.setNeedsRender()` automáticamente.
 
-### 6. Mecanismo de estado observable
-
-**Tipos de valor:** `@State` (en `TUIkitView/State/State.swift`), idéntico a SwiftUI. Cada mutación llama `AppState.shared.setNeedsRender()`.
-
-**Tipos de referencia:** macro `@Observable` de Swift + `.environment(_:)` / `@Environment(ObjectType.self)`:
-
-```swift
-@Observable
-class EditorState {
-    var buffer: TextBuffer = TextBuffer()
-}
-
-// En la raíz:
-ContentView().environment(EditorState())
-
-// En vistas hijas:
-@Environment(EditorState.self) var editorState
-```
-
-También disponible: `@Environment(\.keyPath)` para `EnvironmentKey`-based values (e.g. `@Environment(\.statusBar) var statusBar`).
-
----
-
-## Tabla de atajos (referencia)
-
-| Acción | Atajo |
-|--------|-------|
-| Salir | `Ctrl+Q` |
-| Guardar | `Ctrl+S` |
-| Colapsar/expandir sidebar | `Ctrl+B` |
-| Cambiar foco | `Tab` / `Shift+Tab` |
-| Marcar selección | `Ctrl+^` |
-| Copiar | `Alt+C` |
-| Cortar | `Ctrl+K` |
-| Pegar | `Ctrl+U` |
-| Buscar | `Ctrl+W` |
-| Ir a línea | `Ctrl+G` |
-| Buscar y reemplazar | `Ctrl+R` |
-| Cancelar | `Esc` |
+</details>

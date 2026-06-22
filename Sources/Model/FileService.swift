@@ -1,10 +1,29 @@
 import Foundation
 
+// MARK: - Errores
+
+public enum FileServiceError: Error, LocalizedError {
+    case binaryFile
+
+    public var errorDescription: String? {
+        switch self {
+        case .binaryFile: return "Archivo binario — no se puede editar"
+        }
+    }
+}
+
+// MARK: - FileService
+
 public enum FileService {
     // MARK: - Leer archivo
 
     public static func read(path: String) throws -> (lines: [String], lineEnding: LineEnding) {
-        let raw = try String(contentsOfFile: path, encoding: .utf8)
+        let data = try Data(contentsOf: URL(fileURLWithPath: path))
+        // Rechazar archivos binarios (null bytes son la señal más fiable)
+        if data.contains(0) { throw FileServiceError.binaryFile }
+        guard let raw = String(data: data, encoding: .utf8) else {
+            throw FileServiceError.binaryFile
+        }
         let hasCRLF = raw.contains("\r\n")
         let lineEnding: LineEnding = hasCRLF ? .crlf : .lf
         let normalized = raw
