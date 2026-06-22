@@ -27,4 +27,12 @@ else
     echo "  - tuikit-modal-tab-navigation.patch ya aplicado o no aplica (omitiendo)"
 fi
 
+PATCH="$PATCHES_DIR/tuikit-sidebar-overflow.patch"
+if git apply --check "$PATCH" 2>/dev/null; then
+    git apply "$PATCH"
+    echo "  ✓ tuikit-sidebar-overflow.patch aplicado"
+else
+    echo "  - tuikit-sidebar-overflow.patch ya aplicado o no aplica (omitiendo)"
+fi
+
 echo "Listo."

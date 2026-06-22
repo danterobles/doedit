@@ -1,0 +1,41 @@
+diff --git a/Sources/TUIkit/Views/_ListCore.swift b/Sources/TUIkit/Views/_ListCore.swift
+index 43b9be0..0e6b685 100644
+--- a/Sources/TUIkit/Views/_ListCore.swift
++++ b/Sources/TUIkit/Views/_ListCore.swift
+@@ -108,8 +108,10 @@ struct _ListCore<SelectionValue: Hashable & Sendable, Content: View, Footer: Vie
+             let maxRowWidth = visibleRows.map { $0.row.buffer.width }.max() ?? 0
+             let rowWidth: Int
+             if context.hasExplicitWidth {
+-                // Use available width minus 2 for borders only (content padding is 0)
+-                rowWidth = max(maxRowWidth, context.availableWidth - 2)
++                // Fixed-width context (e.g. NavigationSplitView sidebar): cap to the
++                // available width so rows never exceed the column boundary. Content
++                // wider than rowWidth is truncated in renderPlainLine with '…'.
++                rowWidth = context.availableWidth - 2
+             } else {
+                 rowWidth = maxRowWidth
+             }
+@@ -409,9 +411,20 @@ struct _ListCore<SelectionValue: Hashable & Sendable, Content: View, Footer: Vie
+         backgroundColor: Color?
+     ) -> String {
+         let lineLength = line.strippedLength
+-        let usedWidth = 1 + lineLength
+-        let rightPadding = max(1, rowWidth - usedWidth)
+-        let paddedLine = " " + line + String(repeating: " ", count: rightPadding)
++        let displayLine: String
++        let displayLength: Int
++        if lineLength >= rowWidth {
++            // Content is wider than rowWidth: truncate with ellipsis so the rendered
++            // row stays within the column boundary and never corrupts adjacent columns.
++            displayLine = line.ansiAwarePrefix(visibleCount: rowWidth - 2) + "…"
++            displayLength = rowWidth - 1
++        } else {
++            displayLine = line
++            displayLength = lineLength
++        }
++        let usedWidth = 1 + displayLength
++        let rightPadding = max(0, rowWidth - usedWidth)
++        let paddedLine = " " + displayLine + String(repeating: " ", count: rightPadding)
+ 
+         return paddedLine.withPersistentBackground(backgroundColor)
+     }
