@@ -1,4 +1,5 @@
 import TUIkit
+import doeditCore
 
 struct ReplacePrompt: View {
     let isPresented: Binding<Bool>

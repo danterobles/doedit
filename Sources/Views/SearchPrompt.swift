@@ -1,4 +1,5 @@
 import TUIkit
+import doeditCore
 
 struct SearchPrompt: View {
     let isPresented: Binding<Bool>

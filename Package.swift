@@ -8,12 +8,23 @@ let package = Package(
         .package(url: "https://github.com/phranck/TUIkit.git", branch: "main")
     ],
     targets: [
+        .target(
+            name: "doeditCore",
+            path: "Sources/Model"
+        ),
         .executableTarget(
             name: "doedit",
             dependencies: [
+                "doeditCore",
                 .product(name: "TUIkit", package: "TUIkit")
             ],
-            path: "Sources"
+            path: "Sources",
+            exclude: ["Model"]
+        ),
+        .testTarget(
+            name: "doeditTests",
+            dependencies: ["doeditCore"],
+            path: "Tests"
         )
     ]
 )

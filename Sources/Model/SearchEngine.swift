@@ -2,16 +2,22 @@ import Foundation
 
 // MARK: - Match
 
-struct MatchPosition: Equatable, Sendable {
-    let line: Int
-    let startColumn: Int
-    let endColumn: Int
+public struct MatchPosition: Equatable, Sendable {
+    public let line: Int
+    public let startColumn: Int
+    public let endColumn: Int
+
+    public init(line: Int, startColumn: Int, endColumn: Int) {
+        self.line = line
+        self.startColumn = startColumn
+        self.endColumn = endColumn
+    }
 }
 
 // MARK: - TextBuffer search
 
 extension TextBuffer {
-    func search(for term: String, caseSensitive: Bool) -> [MatchPosition] {
+    public func search(for term: String, caseSensitive: Bool) -> [MatchPosition] {
         guard !term.isEmpty else { return [] }
         var matches: [MatchPosition] = []
 

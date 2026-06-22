@@ -1,4 +1,5 @@
 import TUIkit
+import doeditCore
 
 struct EditorView: View {
     let buffer: TextBuffer

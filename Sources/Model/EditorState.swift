@@ -2,39 +2,39 @@ import Observation
 import Foundation
 
 @Observable
-final class EditorState: @unchecked Sendable {
-    var currentDirectory: String
-    var files: [FileEntry] = []
-    var selectedFileID: String? = nil
-    var activeBuffer: TextBuffer? = nil
-    var errorMessage: String? = nil
-    let clipboard = Clipboard()
+public final class EditorState: @unchecked Sendable {
+    public var currentDirectory: String
+    public var files: [FileEntry] = []
+    public var selectedFileID: String? = nil
+    public var activeBuffer: TextBuffer? = nil
+    public var errorMessage: String? = nil
+    public let clipboard = Clipboard()
 
     // MARK: - Búsqueda
-    var showSearch = false
-    var searchTerm: String = ""
-    var searchCaseSensitive = false
-    private(set) var searchMatches: [MatchPosition] = []
-    private(set) var currentMatchIndex: Int = 0
+    public var showSearch = false
+    public var searchTerm: String = ""
+    public var searchCaseSensitive = false
+    public private(set) var searchMatches: [MatchPosition] = []
+    public private(set) var currentMatchIndex: Int = 0
 
     // MARK: - Ir a línea
-    var showGoToLine = false
-    var goToLineInput: String = ""
+    public var showGoToLine = false
+    public var goToLineInput: String = ""
 
     // MARK: - Buscar y reemplazar
-    var showReplace = false
-    var replaceTerm: String = ""
+    public var showReplace = false
+    public var replaceTerm: String = ""
 
-    init(directory: String) {
+    public init(directory: String) {
         self.currentDirectory = directory
         reload()
     }
 
-    func reload() {
+    public func reload() {
         files = FileService.list(directory: currentDirectory)
     }
 
-    func openFile(_ path: String) {
+    public func openFile(_ path: String) {
         do {
             let (lines, ending) = try FileService.read(path: path)
             activeBuffer = TextBuffer(lines: lines, filePath: path, lineEnding: ending)
@@ -48,7 +48,7 @@ final class EditorState: @unchecked Sendable {
         }
     }
 
-    func saveCurrentBuffer() throws {
+    public func saveCurrentBuffer() throws {
         guard let buffer = activeBuffer, let path = buffer.filePath else { return }
         let content = buffer.serialize()
         try content.write(toFile: path, atomically: true, encoding: .utf8)
@@ -57,20 +57,20 @@ final class EditorState: @unchecked Sendable {
 
     // MARK: - Operaciones de búsqueda
 
-    func runSearch() {
+    public func runSearch() {
         guard let buffer = activeBuffer else { searchMatches = []; return }
         searchMatches = buffer.search(for: searchTerm, caseSensitive: searchCaseSensitive)
         currentMatchIndex = 0
         jumpToCurrentMatch()
     }
 
-    func nextMatch() {
+    public func nextMatch() {
         guard !searchMatches.isEmpty else { return }
         currentMatchIndex = (currentMatchIndex + 1) % searchMatches.count
         jumpToCurrentMatch()
     }
 
-    func prevMatch() {
+    public func prevMatch() {
         guard !searchMatches.isEmpty else { return }
         currentMatchIndex = (currentMatchIndex + searchMatches.count - 1) % searchMatches.count
         jumpToCurrentMatch()
@@ -91,7 +91,7 @@ final class EditorState: @unchecked Sendable {
 
     // MARK: - Reemplazo
 
-    func replaceCurrentMatch() {
+    public func replaceCurrentMatch() {
         guard !searchMatches.isEmpty, let buffer = activeBuffer else { return }
         let match = searchMatches[currentMatchIndex]
         buffer.replaceInLine(
@@ -103,7 +103,8 @@ final class EditorState: @unchecked Sendable {
         runSearch()
     }
 
-    func replaceAllMatches() -> Int {
+    @discardableResult
+    public func replaceAllMatches() -> Int {
         guard !searchMatches.isEmpty, let buffer = activeBuffer else { return 0 }
         let sorted = searchMatches.sorted {
             $0.line != $1.line ? $0.line > $1.line : $0.startColumn > $1.startColumn
@@ -123,7 +124,7 @@ final class EditorState: @unchecked Sendable {
 
     // MARK: - Ir a línea
 
-    func goToLine(_ lineNumber: Int) {
+    public func goToLine(_ lineNumber: Int) {
         guard let buffer = activeBuffer else { return }
         let target = max(1, min(lineNumber, buffer.lines.count))
         buffer.moveTo(line: target - 1, column: 0)

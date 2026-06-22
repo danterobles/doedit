@@ -1,5 +1,6 @@
 import TUIkit
 import Darwin
+import doeditCore
 
 struct RootView: View {
     @Environment(\.statusBar) var statusBar

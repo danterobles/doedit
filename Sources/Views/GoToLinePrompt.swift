@@ -1,4 +1,5 @@
 import TUIkit
+import doeditCore
 
 struct GoToLinePrompt: View {
     let isPresented: Binding<Bool>

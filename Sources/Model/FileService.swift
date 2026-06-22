@@ -1,9 +1,9 @@
 import Foundation
 
-enum FileService {
+public enum FileService {
     // MARK: - Leer archivo
 
-    static func read(path: String) throws -> (lines: [String], lineEnding: LineEnding) {
+    public static func read(path: String) throws -> (lines: [String], lineEnding: LineEnding) {
         let raw = try String(contentsOfFile: path, encoding: .utf8)
         let hasCRLF = raw.contains("\r\n")
         let lineEnding: LineEnding = hasCRLF ? .crlf : .lf
@@ -18,13 +18,13 @@ enum FileService {
 
     // MARK: - Listar directorio
 
-    static let configExtensions: Set<String> = [
+    public static let configExtensions: Set<String> = [
         "conf", "cfg", "ini", "yaml", "yml", "toml", "env", "json",
         "properties", "plist", "xml", "sh", "bash", "zsh", "fish"
     ]
 
     /// Lista el contenido de un directorio. Si showAll es false, filtra por extensiones de config.
-    static func list(directory: String, showAll: Bool = true) -> [FileEntry] {
+    public static func list(directory: String, showAll: Bool = true) -> [FileEntry] {
         let fm = FileManager.default
         guard let names = try? fm.contentsOfDirectory(atPath: directory) else { return [] }
 

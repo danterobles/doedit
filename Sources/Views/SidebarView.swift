@@ -1,4 +1,5 @@
 import TUIkit
+import doeditCore
 
 struct SidebarView: View {
     let state: EditorState

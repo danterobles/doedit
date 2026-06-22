@@ -1,4 +1,5 @@
 import TUIkit
+import doeditCore
 
 final class EditorHandler: Focusable, @unchecked Sendable {
     let focusID: String

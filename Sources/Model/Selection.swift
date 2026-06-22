@@ -11,19 +11,24 @@ extension CursorPosition: Comparable {
 
 // MARK: - Selection
 
-struct Selection: Equatable, Sendable {
-    var anchor: CursorPosition
-    var head: CursorPosition
+public struct Selection: Equatable, Sendable {
+    public var anchor: CursorPosition
+    public var head: CursorPosition
 
-    var isEmpty: Bool { anchor == head }
+    public init(anchor: CursorPosition, head: CursorPosition) {
+        self.anchor = anchor
+        self.head = head
+    }
 
-    func normalized() -> (start: CursorPosition, end: CursorPosition) {
+    public var isEmpty: Bool { anchor == head }
+
+    public func normalized() -> (start: CursorPosition, end: CursorPosition) {
         anchor <= head ? (anchor, head) : (head, anchor)
     }
 
     // Whether document position (line, col) falls inside the selection.
     // End column is exclusive (char at `end` is NOT selected).
-    func contains(line: Int, column: Int) -> Bool {
+    public func contains(line: Int, column: Int) -> Bool {
         let (start, end) = normalized()
         let pos = CursorPosition(line: line, column: column)
         return pos >= start && pos < end
@@ -32,6 +37,8 @@ struct Selection: Equatable, Sendable {
 
 // MARK: - Clipboard
 
-final class Clipboard: @unchecked Sendable {
-    var content: String = ""
+public final class Clipboard: @unchecked Sendable {
+    public var content: String = ""
+
+    public init() {}
 }
